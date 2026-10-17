@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shopee Monthly Sales Report - Internal Tool</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;max-width:720px;margin:40px auto;padding:0 16px;line-height:1.6;color:#222}
+  h1{font-size:1.6rem} code{background:#f2f2f2;padding:2px 6px;border-radius:4px;word-break:break-all}
+  .box{background:#fff7f3;border:1px solid #ee4d2d;border-radius:8px;padding:12px 16px;margin:20px 0}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<h1>Shopee Monthly Sales Report</h1>
+<p>An internal, single-seller automation tool for my own Shopee shop.</p>
+
+<h2>What it does</h2>
+<ul>
+  <li>Runs as a scheduled job once a month (no login or user accounts needed).</li>
+  <li>Reads my own shop's completed orders, order details and escrow fee details through the Shopee Open Platform API.</li>
+  <li>Generates an Excel (.xlsx) report: product, quantity, selling price, buying price and Shopee fees.</li>
+  <li>Sends the report to me through a private Telegram bot for bookkeeping and invoicing.</li>
+</ul>
+
+<h2>Data &amp; privacy</h2>
+<ul>
+  <li>Read-only: it never changes products, stock or orders.</li>
+  <li>No buyer personal information (name, address, phone) is requested or stored.</li>
+  <li>Data is not shared with any third party.</li>
+</ul>
+
+<h2>Interface</h2>
+<p>There is no web interface. The tool's output is an Excel file delivered via Telegram.</p>
+
+<div id="auth" class="box hidden">
+  <strong>Shopee authorization received.</strong><br>
+  code: <code id="code"></code><br>
+  shop_id: <code id="shop"></code>
+</div>
+
+<script>
+  var p = new URLSearchParams(location.search);
+  if (p.get("code")) {
+    document.getElementById("code").textContent = p.get("code");
+    document.getElementById("shop").textContent = p.get("shop_id") || "";
+    document.getElementById("auth").className = "box";
+  }
+</script>
+</body>
+</html>
